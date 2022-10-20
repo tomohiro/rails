@@ -1317,6 +1317,11 @@ ActiveRecord::Schema.define do
     t.integer :id
     t.datetime :created_at
   end
+
+  create_table :too_long_long_long_long_long_long_long_long_table_name, force: true do |t|
+    t.integer :too_long_long_long_long_long_long_cloumn_name_one_id, null: false
+    t.integer :too_long_long_long_long_long_long_cloumn_name_two_id, null: false
+  end
 end
 
 Course.connection.create_table :courses, force: true do |t|

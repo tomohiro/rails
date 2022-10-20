@@ -21,6 +21,7 @@ require "models/developer"
 require "models/post"
 require "models/comment"
 require "models/rating"
+require "models/too_long_table_name"
 require "support/stubs/strong_parameters"
 require "support/async_helper"
 
@@ -450,6 +451,18 @@ class CalculationsTest < ActiveRecord::TestCase
     assert_equal 50,  c[1]
     assert_equal 105, c[6]
     assert_equal 60,  c[2]
+  end
+
+  def test_should_group_by_multiple_fields_on_short_name_table
+    2.times do
+      TooLongTableName.create!(
+        too_long_long_long_long_long_long_cloumn_name_one_id: 1,
+        too_long_long_long_long_long_long_cloumn_name_two_id: 2
+      )
+    end
+
+    res = TooLongTableName.group(:to_long_long_long_long_long_long_cloumn_name_one_id, :to_long_long_long_long_long_long_cloumn_name_two_id).count
+    assert_equal({ [1, 2] => 2 }, res)
   end
 
   def test_should_calculate_with_invalid_field
